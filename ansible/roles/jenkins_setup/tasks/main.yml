@@ -9,7 +9,7 @@
   become_user: root
 
 - name: apt-get install
-  shell: apt-get install apt-transport-https -y
+  shell: apt-get install apt-transport-https -y --force-keys
   become: true
   become_user: root
   
