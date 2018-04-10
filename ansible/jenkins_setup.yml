@@ -19,6 +19,17 @@
       
     - name : Add host to groupname
       add_host: hostname={{ gce.instance_data[0].public_ip }} groupname=jenkins_instances
+      
+    - name: delete test-instances
+      gce:
+        service_account_email: "{{ service_account_email }}"
+        credentials_file: "{{ credentials_file }}"
+        project_id: "{{ project_id }}"
+        instance_names: "{{ gce.instance_names }}"
+        zone: us-central1-a
+        state: absent
+      tags:
+        - delete
 - name: Docker & Jenkins
   hosts: jenkins_instances
   connection: ssh
