@@ -6,6 +6,11 @@
   become: true
   become_user: root
 
+- name: apt-get install
+  shell: apt-get install apt-transport-https
+  become: true
+  become_user: root
+  
 - name: apt-get update
   shell: apt-get update
   become: true
