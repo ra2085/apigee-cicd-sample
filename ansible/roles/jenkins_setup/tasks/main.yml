@@ -3,20 +3,13 @@
 - apt_repository: repo='deb https://apt.dockerproject.org/repo debian-jessie main'
   sudo: yes
   
-- name: apt-get install
-  shell: apt-get install -y apt-transport-https
-  become: true
-  become_user: root
+- apt:
+    name: apt-transport-https
+    state: latest
+    update_cache: yes
+    force: yes
+  sudo: yes
   
-- name: apt-get clean
-  shell: apt-get clean
-  become: true
-  become_user: root
-  
-- name: apt-get update
-  shell: apt-get update
-  become: true
-  become_user: root
 - apt:
     name: "{{ item }}"
     state: latest
