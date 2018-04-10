@@ -13,30 +13,13 @@
             project_id: "{{ project_id }}"
             tags: jenkins
       register: gce
-      tags:
-        - delete
-        - create
 
     - name : Wait for SSH to come up
       wait_for: host={{ gce.instance_data[0].public_ip }} port=22 delay=10 timeout=60
-      tags:
-        - create
       
     - name : Add host to groupname
       add_host: hostname={{ gce.instance_data[0].public_ip }} groupname=jenkins_instances
-      tags:
-        - create
       
-    - name: delete test-instances
-      gce:
-        service_account_email: "{{ service_account_email }}"
-        credentials_file: "{{ credentials_file }}"
-        project_id: "{{ project_id }}"
-        instance_names: "{{ gce.instance_names }}"
-        zone: us-central1-a
-        state: absent
-      tags:
-        - delete
 - name: Docker & Jenkins
   hosts: jenkins_instances
   connection: ssh
