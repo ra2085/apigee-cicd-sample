@@ -19,3 +19,9 @@
       
     - name : Add host to groupname
       add_host: hostname={{ gce.instance_data[0].public_ip }} groupname=jenkins_instances
+- name: Docker & Jenkins
+  hosts: jenkins_instances
+  connection: ssh
+  sudo: True
+  roles:
+    - jenkins_setup
