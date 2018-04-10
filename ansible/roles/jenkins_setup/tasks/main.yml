@@ -6,7 +6,6 @@
 - apt:
     name: apt-transport-https
     state: latest
-    update_cache: yes
     force: yes
   sudo: yes
   
