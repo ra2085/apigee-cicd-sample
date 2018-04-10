@@ -7,7 +7,7 @@
   become_user: root
 
 - name: apt-get install
-  shell: apt-get install apt-transport-https
+  shell: apt-get install apt-transport-https -y
   become: true
   become_user: root
   
