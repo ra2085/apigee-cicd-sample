@@ -1,0 +1,21 @@
+- name: Create jenkins instances
+  hosts: localhost
+  gather_facts: no
+  connection: local
+  tasks:
+    - name : Launch instance
+        gce:
+            instance_names: jenkins
+            machine_type: "{{ machine_type }}"
+            image: "{{ image }}"
+            service_account_email: "{{ service_account_email }}"
+            credentials_file: "{{ credentials_file }}"
+            project_id: "{{ project_id }}"
+            tags: jenkins
+        register: gce
+    - name: Wait for SSH to come up
+        wait_for: host={{ item.public_ip }} port=22 delay=10 timeout=60
+        loop: "{{ gce.instance_data }}"
+    - name: Add host to groupname
+        add_host: hostname={{ item.public_ip }} groupname=jenkins_instances
+        loop: "{{ gce.instance_data }}"
