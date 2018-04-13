@@ -1,0 +1,9 @@
+{
+	"name": "uscis-tests",
+	"version": "1.0.0",
+	"description": "Integration testing for uscis api v1",
+	"dependencies": {
+		"apickli": "latest",
+		"cucumber": "^3"
+	}
+}

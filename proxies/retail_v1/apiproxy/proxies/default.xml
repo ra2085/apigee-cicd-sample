@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+    <Description/>
+    <FaultRules>
+        <FaultRule name="QuotaViolation">
+            <Condition>fault.name == "QuotaViolation"</Condition>
+            <Step>
+                <Name>Quota-Violation</Name>
+            </Step>
+        </FaultRule>
+    </FaultRules>
+    <PreFlow name="PreFlow">
+        <Request>
+            <Step>
+                <Name>Spike-Arrest-1</Name>
+            </Step>
+            <Step>
+                <Name>Verify-API-Key-1</Name>
+            </Step>
+            <Step>
+                <Name>Quota-1</Name>
+            </Step>
+        </Request>
+        <Response/>
+    </PreFlow>
+    <PostFlow name="PostFlow">
+        <Request/>
+        <Response/>
+    </PostFlow>
+    <Flows>
+        <Flow name="CreateProduct">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>JSON-Threat-Protection-1</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/products") and (request.verb = "POST")</Condition>
+        </Flow>
+        <Flow name="UpdateProduct">
+            <Description/>
+            <Request/>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/products/*") and (request.verb = "PUT")</Condition>
+        </Flow>
+        <Flow name="GetProducts">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>ResponseCacheProducts</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>ResponseCacheProducts</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/products") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="GetStores">
+            <Description/>
+            <Request/>
+            <Response>
+                <Step>
+                    <Name>ExtractStoreLatLong</Name>
+                </Step>
+                <Step>
+                    <Condition>(lat != null) and (long != null)</Condition>
+                    <Name>Service-Callout-Geocoding</Name>
+                </Step>
+                <Step>
+                    <Name>JavaScript-1</Name>
+                </Step>
+                <Step>
+                    <Name>ExtractVariables-Formatted-Address</Name>
+                </Step>
+                <Step>
+                    <Name>JavaScript-2</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/stores/*") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="default">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>Raise-Fault-1</Name>
+                </Step>
+            </Request>
+            <Response/>
+        </Flow>
+    </Flows>
+    <HTTPProxyConnection>
+        <BasePath>/retail/v1</BasePath>
+        <Properties/>
+        <VirtualHost>secure</VirtualHost>
+    </HTTPProxyConnection>
+    <RouteRule name="default">
+        <TargetEndpoint>default</TargetEndpoint>
+    </RouteRule>
+</ProxyEndpoint>

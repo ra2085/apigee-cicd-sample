@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="1" name="retail">
+    <Basepaths>/retail/v1</Basepaths>
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1522301656153</CreatedAt>
+    <CreatedBy>rgonzalez+equifax@nearbpo.com</CreatedBy>
+    <Description></Description>
+    <DisplayName>retail</DisplayName>
+    <LastModifiedAt>1522628432364</LastModifiedAt>
+    <LastModifiedBy>rgonzalez+equifax@nearbpo.com</LastModifiedBy>
+    <Policies>
+        <Policy>ExtractStoreLatLong</Policy>
+        <Policy>ExtractVariables-Formatted-Address</Policy>
+        <Policy>FlowCalloutSecuredBackend</Policy>
+        <Policy>JSON-Threat-Protection-1</Policy>
+        <Policy>JavaScript-1</Policy>
+        <Policy>JavaScript-2</Policy>
+        <Policy>OAuth-v20-1</Policy>
+        <Policy>Quota-1</Policy>
+        <Policy>Quota-Violation</Policy>
+        <Policy>Raise-Fault-1</Policy>
+        <Policy>RemoveAuthorizationHeader</Policy>
+        <Policy>ResponseCacheProducts</Policy>
+        <Policy>Service-Callout-Geocoding</Policy>
+        <Policy>Spike-Arrest-1</Policy>
+        <Policy>Verify-API-Key-1</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources>
+        <Resource>jsc://JavaScript-1.js</Resource>
+        <Resource>jsc://JavaScript-2.js</Resource>
+    </Resources>
+    <Spec></Spec>
+    <TargetServers/>
+    <TargetEndpoints>
+        <TargetEndpoint>default</TargetEndpoint>
+    </TargetEndpoints>
+</APIProxy>

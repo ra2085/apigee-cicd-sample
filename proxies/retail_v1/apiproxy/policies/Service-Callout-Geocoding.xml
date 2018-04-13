@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ServiceCallout async="false" continueOnError="false" enabled="true" name="Service-Callout-Geocoding">
+    <DisplayName>Service-Callout-Geocoding</DisplayName>
+    <Properties/>
+    <Request>
+        <Set>
+            <QueryParams>
+                <QueryParam name="latlng">{lat},{long}</QueryParam>
+            </QueryParams>
+        </Set>
+    </Request>
+    <Response>calloutResponse</Response>
+    <HTTPTargetConnection>
+        <Properties/>
+        <URL>https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBcABgNXcQWzmdqtCce4UcZA8waYncJ8zk</URL>
+    </HTTPTargetConnection>
+</ServiceCallout>
