@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'rgonzalez10:apigee-toolset'
+            image 'rgonzalez01:apigee-toolset'
             args '-v /root/.m2:/root/.m2'
         }
     }
