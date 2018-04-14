@@ -9,6 +9,7 @@ pipeline {
         stage('Build') {
             steps {
                     sh 'cd proxies/retail_v1'
+                    sh 'ls'
                     withCredentials([usernamePassword(credentialsId: 'apigee_user', passwordVariable: 'APIGEE_PASS', usernameVariable: 'APIGEE_USER')]) {
                         sh 'mvn install -Ptest -Dusername=${APIGEE_USER} -Dpassword=${APIGEE_PASS}'
                     }
