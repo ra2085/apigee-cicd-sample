@@ -1,7 +1,7 @@
 Feature:
-	As a Retail Customer I want to be able to get a list of available stores.
+	As a Retail user I should only access the resource stores under the limits of my API Key.
 
-	Scenario: Setting headers in GET request
+	Scenario: Should always need an API Key
 		Given I set User-Agent header to apickli
 		When I GET /retail/v1/stores
-        Then response code should be 200
+        Then response code should be 401
