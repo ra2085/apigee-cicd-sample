@@ -38,7 +38,7 @@
           <executions>
               <execution>
                   <id>integration-tests</id>
-                    <phase>install</phase>
+                    <phase>deploy</phase>
                   <goals>
                       <goal>exec</goal>
                   </goals>
@@ -145,7 +145,7 @@
             <id>test</id>
             <properties>
                 <org>rgonzalezequifax-eval</org>  <!-- default org, replace with default org to avoid passing parameter e.g. -Dorg testmyapi -->
-                <options>update</options>  <!-- default org, replace with default org to avoid passing parameter e.g. -Dorg testmyapi -->
+                <options>validate</options>  <!-- default org, replace with default org to avoid passing parameter e.g. -Dorg testmyapi -->
                 <apigee.profile>test</apigee.profile>
                 <apigee.env>test</apigee.env>
                 <apigee.hosturl>https://api.enterprise.apigee.com</apigee.hosturl>
