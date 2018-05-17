@@ -19,7 +19,8 @@ pipeline {
                                         [xpath: '/ProxyEndpoint/HTTPProxyConnection/BasePath', value: '/retail/v1']
                                     )
                                 ]
-                        ]   )   
+                            )
+                        ]
                     )
                 ]
             )
