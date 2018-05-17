@@ -1,3 +1,5 @@
+import groovy.json.JsonOutput
+
 pipeline {
     agent {
         docker {
@@ -6,6 +8,14 @@ pipeline {
         }
     }
     stages {
+        stage('Create config.json template') {
+            def generated = [configurations(
+                [name:'test', proxies([name: 'default.xml', tokens(
+                    [xpath: '/ProxyEndpoint/HTTPProxyConnection/BasePath', value: '/retail/v1']
+                )])]
+            )]
+            writeJSON(file: 'proxies/retail_v1/config.json', json: generated)
+        }
         stage('Build') {
             steps {
                     withCredentials([usernamePassword(credentialsId: 'apigee_user', passwordVariable: 'APIGEE_PASS', usernameVariable: 'APIGEE_USER')]) {
