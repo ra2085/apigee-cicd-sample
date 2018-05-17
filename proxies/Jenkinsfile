@@ -17,7 +17,7 @@ pipeline {
                             name:'test', proxies: (
                                 [
                                     name: 'default.xml', tokens: (
-                                        [xpath: '/ProxyEndpoint/HTTPProxyConnection/BasePath', value: '/retail/v1'],[]
+                                        [xpath: '/ProxyEndpoint/HTTPProxyConnection/BasePath', value: '/retail/v1']
                                     )
                                 ]
                             )
