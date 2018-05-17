@@ -10,6 +10,21 @@ pipeline {
     stages {
         stage('Create config.json template') {
             steps{
+                echo JsonOutput.toJson(
+                [
+                    configurations: (
+                        [
+                            name:'test', proxies: (
+                                [
+                                    name: 'default.xml', tokens: (
+                                        [xpath: '/ProxyEndpoint/HTTPProxyConnection/BasePath', value: '/retail/v1']
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                ]
+                )
                 writeFile file: 'proxies/retail_v1/config.json', text: JsonOutput.toJson(
                 [
                     configurations: (
