@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Create config.json template') {
             steps{
-            def generated = JsonOutput.toJson(
+                writeFile file: 'proxies/retail_v1/config.json', text: JsonOutput.toJson(
                 [
                     configurations: (
                         [
@@ -24,8 +24,7 @@ pipeline {
                         ]
                     )
                 ]
-            )
-            writeFile file: 'proxies/retail_v1/config.json', text: generated
+                )
             }
         }
         stage('Build') {
