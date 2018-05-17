@@ -24,7 +24,7 @@ pipeline {
                     )
                 ]
             )
-            writeJSON file: 'proxies/retail_v1/config.json', json: generated
+            writeFile file: 'proxies/retail_v1/config.json', text: generated
         }
         stage('Build') {
             steps {
