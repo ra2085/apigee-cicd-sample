@@ -11,11 +11,11 @@ pipeline {
         stage('Create config.json template') {
             def generated = JsonOutput.toJson(
                 [
-                    configurations(
+                    configurations: (
                         [
-                            name:'test', proxies(
+                            name:'test', proxies: (
                                 [
-                                    name: 'default.xml', tokens(
+                                    name: 'default.xml', tokens: (
                                         [xpath: '/ProxyEndpoint/HTTPProxyConnection/BasePath', value: '/retail/v1']
                                     )
                                 ]
