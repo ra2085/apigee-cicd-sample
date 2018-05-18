@@ -13,7 +13,7 @@ pipeline {
             steps{
                 script {
                     branchName = "${env.BRANCH_NAME}"
-                    basePath = "${branchName}" == "master" ? '' : '/${env.BRANCH_NAME}'
+                    basePath = "${branchName}" == "master" ? '' : "/${branchName}"
                     
                     configJson = JsonOutput.toJson(
                             [
@@ -23,7 +23,7 @@ pipeline {
                                         proxies: [
                                             [
                                                 name: 'default.xml', tokens: [
-                                                    [xpath: '/ProxyEndpoint/HTTPProxyConnection/BasePath', value:  basePath+'/retail/v1']
+                                                    [xpath: '/ProxyEndpoint/HTTPProxyConnection/BasePath', value: '${basePath}/retail/v1']
                                                 ]
                                             ]
                                         ],
