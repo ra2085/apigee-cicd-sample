@@ -41,7 +41,7 @@ pipeline {
             steps {
                     withCredentials([usernamePassword(credentialsId: 'apigee_user', passwordVariable: 'APIGEE_PASS', usernameVariable: 'APIGEE_USER')]) {
                         echo "----------${basePath}"
-                        sh 'cd proxies/retail_v1 && mvn install -Ptest -Dusername=${APIGEE_USER} -Dpassword=${APIGEE_PASS} -DbasePath=$basePath'
+                        sh 'cd proxies/retail_v1 && mvn install -Ptest -Dusername=${APIGEE_USER} -Dpassword=${APIGEE_PASS} -DbasePath=\"${basePath}\"'
                     }
             }
         }
