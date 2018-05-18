@@ -14,22 +14,16 @@ pipeline {
                 [
                     configurations: [
                         [
-                            name:'test', proxies: [
+                            name:'test', 
+                            proxies: [
                                 [
                                     name: 'default.xml', tokens: [
                                         [xpath: '/ProxyEndpoint/HTTPProxyConnection/BasePath', value: '/retail/v1']
                                     ]
                                 ]
-                            ]
-                        ],
-                        [
-                            name:'prod', proxies: [
-                                [
-                                    name: 'default.xml', tokens: [
-                                        [xpath: '/ProxyEndpoint/HTTPProxyConnection/BasePath', value: '/retail/v1']
-                                    ]
-                                ]
-                            ]
+                            ],
+                            policies: [],
+                            targets: []
                         ]
                     ]
                 ]
