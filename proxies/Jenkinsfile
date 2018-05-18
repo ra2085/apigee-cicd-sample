@@ -14,7 +14,7 @@ pipeline {
                 script {
                     branchName = "${env.BRANCH_NAME}"
                     basePath = "${branchName}" == "master" ? '' : "/${branchName}"
-                    
+                    bbasePath = "${basePath}/retail/v1"
                     configJson = JsonOutput.toJson(
                             [
                                 configurations: [
@@ -23,7 +23,7 @@ pipeline {
                                         proxies: [
                                             [
                                                 name: 'default.xml', tokens: [
-                                                    [xpath: '/ProxyEndpoint/HTTPProxyConnection/BasePath', value: '${basePath}/retail/v1']
+                                                    [xpath: '/ProxyEndpoint/HTTPProxyConnection/BasePath', value: bbasePath]
                                                 ]
                                             ]
                                         ],
