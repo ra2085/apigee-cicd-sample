@@ -3,7 +3,7 @@ import groovy.json.JsonOutput
 pipeline {
     environment {
         branchName = "${env.BRANCH_NAME}"
-        basePath = ("${branchName}" == "master" ? "" : ("/"+ "${branchName}"))
+        basePath = ("${branchName}" == 'master') ? '' : ("/"+"${branchName}")
         configJson = JsonOutput.toJson(
                 [
                     configurations: [
