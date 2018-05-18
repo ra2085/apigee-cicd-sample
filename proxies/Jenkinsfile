@@ -1,16 +1,9 @@
 import groovy.json.JsonOutput
 
 pipeline {
-    agent {
-        docker {
-            image 'rgonzalez01/apigee-toolset'
-            args '-v /root/.m2:/root/.m2'
-        }
-    }
-    stages {
-        stage('Create config.json template') {
-            steps{
-                writeFile file: 'proxies/retail_v1/config.json', text: JsonOutput.toJson(
+    environment {
+        basePath = (env.BRANCH_NAME == 'master' ? '' : ('/'+ env.BRANCH_NAME))
+        configJson = JsonOutput.toJson(
                 [
                     configurations: [
                         [
@@ -18,7 +11,7 @@ pipeline {
                             proxies: [
                                 [
                                     name: 'default.xml', tokens: [
-                                        [xpath: '/ProxyEndpoint/HTTPProxyConnection/BasePath', value: (env.BRANCH_NAME == 'master' ? '' : ('/'+ env.BRANCH_NAME)) +'/retail/v1']
+                                        [xpath: '/ProxyEndpoint/HTTPProxyConnection/BasePath', value:  basePath+'/retail/v1']
                                     ]
                                 ]
                             ],
@@ -28,12 +21,23 @@ pipeline {
                     ]
                 ]
                 )
+    }
+    agent {
+        docker {
+            image 'rgonzalez01/apigee-toolset'
+            args '-v /root/.m2:/root/.m2'
+        }
+    }
+    stages {
+        stage('Create config.json template') {
+            steps{
+                writeFile file: 'proxies/retail_v1/config.json', text: configJson
             }
         }
         stage('Build') {
             steps {
                     withCredentials([usernamePassword(credentialsId: 'apigee_user', passwordVariable: 'APIGEE_PASS', usernameVariable: 'APIGEE_USER')]) {
-                        sh 'cd proxies/retail_v1 && mvn install -Ptest -Dusername=${APIGEE_USER} -Dpassword=${APIGEE_PASS} -DbasePath=${('/'+ env.BRANCH_NAME)}'
+                        sh 'cd proxies/retail_v1 && mvn install -Ptest -Dusername=${APIGEE_USER} -Dpassword=${APIGEE_PASS} -DbasePath=${basePath}'
                     }
             }
         }
