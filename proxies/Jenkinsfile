@@ -1,28 +1,7 @@
 import groovy.json.JsonOutput
 
 pipeline {
-    environment {
-        branchName = "${env.BRANCH_NAME}" == "master"
-        basePath = "${branchName}" ? '' : '/${env.BRANCH_NAME}'
-        configJson = JsonOutput.toJson(
-                [
-                    configurations: [
-                        [
-                            name:'test', 
-                            proxies: [
-                                [
-                                    name: 'default.xml', tokens: [
-                                        [xpath: '/ProxyEndpoint/HTTPProxyConnection/BasePath', value:  basePath+'/retail/v1']
-                                    ]
-                                ]
-                            ],
-                            policies: [],
-                            targets: []
-                        ]
-                    ]
-                ]
-                )
-    }
+        
     agent {
         docker {
             image 'rgonzalez01/apigee-toolset'
@@ -32,6 +11,28 @@ pipeline {
     stages {
         stage('Create config.json template') {
             steps{
+                script {
+                    branchName = "${env.BRANCH_NAME}"
+                    basePath = "${branchName}" == "master" ? '' : '/${env.BRANCH_NAME}'
+                    configJson = JsonOutput.toJson(
+                            [
+                                configurations: [
+                                    [
+                                        name:'test', 
+                                        proxies: [
+                                            [
+                                                name: 'default.xml', tokens: [
+                                                    [xpath: '/ProxyEndpoint/HTTPProxyConnection/BasePath', value:  basePath+'/retail/v1']
+                                                ]
+                                            ]
+                                        ],
+                                        policies: [],
+                                        targets: []
+                                    ]
+                                ]
+                            ]
+                            )
+                }
                 writeFile file: 'proxies/retail_v1/config.json', text: configJson
             }
         }
