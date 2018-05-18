@@ -18,7 +18,7 @@ pipeline {
                             proxies: [
                                 [
                                     name: 'default.xml', tokens: [
-                                        [xpath: '/ProxyEndpoint/HTTPProxyConnection/BasePath', value: '/retail/v1']
+                                        [xpath: '/ProxyEndpoint/HTTPProxyConnection/BasePath', value: (env.BRANCH_NAME == 'master' ? '' : ('/'+ env.BRANCH_NAME)) +'/retail/v1']
                                     ]
                                 ]
                             ],
@@ -33,7 +33,7 @@ pipeline {
         stage('Build') {
             steps {
                     withCredentials([usernamePassword(credentialsId: 'apigee_user', passwordVariable: 'APIGEE_PASS', usernameVariable: 'APIGEE_USER')]) {
-                        sh 'cd proxies/retail_v1 && mvn install -Ptest -Dusername=${APIGEE_USER} -Dpassword=${APIGEE_PASS}'
+                        sh 'cd proxies/retail_v1 && mvn install -Ptest -Dusername=${APIGEE_USER} -Dpassword=${APIGEE_PASS} -DbasePath=${('/'+ env.BRANCH_NAME)}'
                     }
             }
         }
